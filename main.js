@@ -1,4 +1,4 @@
-var phdstr = /archive_print.php\?comicid=..../;
+var phdstr = /archive_print.php\?comicid=(....)/;
 
 window.addEventListener("load", function(){
 
@@ -14,7 +14,8 @@ function httpGetAsync(theUrl, callback)
 }
 
 function getMaxID(data){
-	found = data.match(phdstr);
+	foundMaxID = data.match(phdstr);
+	maxID = foundMaxID[1];
 }
 
 httpGetAsync("https://crossorigin.me/http://phdcomics.com/", getMaxID);
@@ -24,14 +25,19 @@ var randFrame = document.getElementById("frame");
 var randButton = document.getElementById("randButton");
 
 function genRandomUrl(randFrame) {
-	var maxID = 1942;
+	
 	var randID = Math.ceil((Math.random() * maxID));
 	var randComicID = ("0000" + randID).substr(-4,4);
 	randFrame.src = 'http://phdcomics.com/comics/archive.php?comicid=' + randComicID;
 }
 
+function initUrl(randFrame) {
+	randFrame.src = 'http://phdcomics.com';
+}
+
+
 randButton.addEventListener("click",function(){
 	genRandomUrl(randFrame);
 });
-genRandomUrl(randFrame);
+initUrl(randFrame);
 });
