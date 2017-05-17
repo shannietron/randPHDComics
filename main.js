@@ -13,16 +13,13 @@ window.addEventListener("load", function(){
 		if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
 			foundMaxID = xmlHttp.responseText.match(phdstr);
 			maxID = foundMaxID[1];
+			randButton.addEventListener("click",function(){
+				var randID = Math.ceil((Math.random() * maxID));
+				var randComicID = ("0000" + randID).substr(-4,4);
+				randFrame.src = 'http://phdcomics.com/comics/archive.php?comicid=' + randComicID;
+			});
 		}
 	}
 	xmlHttp.open("GET", theURL, true); // true for asynchronous 
 	xmlHttp.send(null);
-
-	randButton.addEventListener("click",function(){
-		var randID = Math.ceil((Math.random() * maxID));
-		var randComicID = ("0000" + randID).substr(-4,4);
-		randFrame.src = 'http://phdcomics.com/comics/archive.php?comicid=' + randComicID;
-	});
-	
-	randFrame.src = 'http://phdcomics.com';
 });
